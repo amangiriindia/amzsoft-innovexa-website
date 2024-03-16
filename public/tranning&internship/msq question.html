@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(10, 10, 10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding-top: 30px;
+        }
+
+        .quiz-container {
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+            overflow: hidden;
+            width: 600px;
+            max-width: 100%;
+            background: rgb(63, 94, 251);
+            background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+        }
+
+        .quiz-header {
+            padding: 4rem;
+        }
+
+        h2 {
+            padding: 1rem;
+            text-align: center;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        ul li label {
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #aa84bb;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: block;
+            font-family: inherit;
+            font-size: 1.1rem;
+            width: 100%;
+            padding: 1.3rem;
+        }
+
+        button:hover {
+            background-color: #732d91;
+        }
+
+        button:focus {
+            background-color: #5e3370;
+            outline: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false" class="snippet-body">
+    <div class="quiz-container" id="quiz">
+        <div class="quiz-header">
+            <h2 id="question">Question text</h2>
+            <ul>
+                <li>
+                    <input type="radio" id="a" name="answer" class="answer" />
+                    <label id="a_text" for="a">Question</label>
+                </li>
+                <li>
+                    <input type="radio" id="b" name="answer" class="answer" />
+                    <label id="b_text" for="b">Question</label>
+                </li>
+                <li>
+                    <input type="radio" id="c" name="answer" class="answer" />
+                    <label id="c_text" for="c">Question</label>
+                </li>
+                <li>
+                    <input type="radio" id="d" name="answer" class="answer" />
+                    <label id="d_text" for="d">Question</label>
+                </li>
+            </ul>
+        </div>
+        <button id="submit">Submit</button>
+    </div>
+
+    <script type="text/javascript">
+        const quizData = [
+            {
+                question: "Which player has won the most IPL trophies?",
+                a: "M S Dhoni",
+                b: "Rohit Sharma",
+                c: "K L Rahul",
+                d: "Jasprit Bumrah",
+                correct: "b"
+            },
+
+            {
+                question: "Which player has hit the most fours in IPL?",
+                a: "Suresh Raina",
+                b: "Shikhar Dhawan",
+                c: "Virat Kohli",
+                d: "Rohit Sharma",
+                correct: "b"
+            },
+
+            {
+                question: "Where was the final of the inaugural IPL season held?",
+                a: "D Y Patil Stadium",
+                b: "Eden Gardens",
+                c: "Wankhede Stadium",
+                d: "Brabourne CCI",
+                correct: "a"
+            },
+
+            {
+                question: "Which player bagged the 'Emerging Player of the Tournament' award in IPL 2008?",
+                a: "Rohit Sharma",
+                b: "Shreevats Goswami",
+                c: "Suresh Raina",
+                d: "Virat Kohli",
+                correct: "b"
+            }
+        ];
+
+        const quiz = document.getElementById("quiz");
+        const answerEls = document.querySelectorAll(".answer");
+        const questionEl = document.getElementById("question");
+        const a_text = document.getElementById("a_text");
+        const b_text = document.getElementById("b_text");
+        const c_text = document.getElementById("c_text");
+        const d_text = document.getElementById("d_text");
+        const submitBtn = document.getElementById("submit");
+
+        let currentQuiz = 0;
+        let score = 0;
+
+        loadQuiz();
+
+        function loadQuiz() {
+            deselectAnswers();
+
+            const currentQuizData = quizData[currentQuiz];
+
+            questionEl.innerText = currentQuizData.question;
+            a_text.innerText = currentQuizData.a;
+            b_text.innerText = currentQuizData.b;
+            c_text.innerText = currentQuizData.c;
+            d_text.innerText = currentQuizData.d;
+        }
+
+        function getSelected() {
+            let answer = undefined;
+            answerEls.forEach(answerEl => {
+                if (answerEl.checked) {
+                    answer = answerEl.id;
+                }
+            });
+            return answer;
+        }
+
+        function deselectAnswers() {
+            answerEls.forEach(answerEl => {
+                answerEl.checked = false;
+            });
+        }
+
+        submitBtn.addEventListener("click", () => {
+            const answer = getSelected();
+            if (answer) {
+                if (answer === quizData[currentQuiz].correct) {
+                    score++;
+                }
+                currentQuiz++;
+                if (currentQuiz < quizData.length) {
+                    loadQuiz();
+                } else {
+                    quiz.innerHTML = `<h2>You answered correctly at ${score}/${quizData.length} questions.</h2>
+                    <button onclick="/meeting-details.html">Back to course</button>`;
+                }
+            }
+        });
+    </script>
+
+
+<!-- firebase connection start -->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDv20AZ2kn-9k_aqJNhjhTZgIcUKwDWqPM",
+      authDomain: "amzsoft-innovexa.firebaseapp.com",
+      databaseURL: "https://amzsoft-innovexa-default-rtdb.firebaseio.com",
+      projectId: "amzsoft-innovexa",
+      storageBucket: "amzsoft-innovexa.appspot.com",
+      messagingSenderId: "505776471332",
+      appId: "1:505776471332:web:e4a8a0c80b302bf6a307b1",
+      measurementId: "G-2D6HJPSWFB"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
+  <!-- Firebase connection end  -->
+
+  
+</body>
+</html>

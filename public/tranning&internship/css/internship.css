@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap");
+.interns{
+    padding: 0 20%;
+    
+}
+.main-sec{
+    padding: 10% 0;
+    background: linear-gradient(to top, #1c1c1cba, #645d5dcc), url(../assets/images/course-04.jpg) ;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hh1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sectionn {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.section-headerr {
+    cursor: pointer;
+}
+
+.attachmentss {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.attachmentt {
+    display: block;
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(assets/images/meetings-bg.jpg);
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 140px;
+    padding-bottom: 130px;
+
+
+}
+.cer-box{
+    width: 70%;
+   
+}
+    

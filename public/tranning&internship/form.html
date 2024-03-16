@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Application Form</title>
+    <link rel="stylesheet" href="../tranning&internship/css/form.css">
+</head>
+<body>
+<div  class="form-bg">
+        <div class="container-form">
+
+        <h2>Internship Application Form</h2>
+        <form id="application-form" action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="university">University/College Name</label>
+                <input type="text" id="university" name="university" required>
+            </div>
+            <div class="form-group">
+                <label for="course">Current Course of Study</label>
+                <input type="text" id="course" name="course" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Current Year</label><br>
+                <label for="year1"><input type="radio" id="year1" name="year" value="1st Year" required> 1st Year</label>
+                <label for="year2"><input type="radio" id="year2" name="year" value="2nd Year"> 2nd Year</label>
+                <label for="year3"><input type="radio" id="year3" name="year" value="3rd Year"> 3rd Year</label>
+                <label for="year4"><input type="radio" id="year4" name="year" value="4th Year"> 4th Year</label>
+            </div>
+            <div class="form-group">
+                <label for="graduation">Expected Graduation Date</label>
+                <input type="date" id="graduation" name="graduation" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Technical Skills</label>
+                <textarea id="skills" name="skills" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="domain">Preferred Internship Domain</label>
+                <select id="domain" name="domain" required>
+                    <option value="">Select Domain</option>
+                    <option value="Android">Android</option>
+                    <option value="iOS">iOS</option>
+                    <option value="MERN">MERN Stack</option>
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                    <option value="Development">Web Development</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="linkedin">LinkedIn Profile URL (Optional)</label>
+                <input type="url" id="linkedin" name="linkedin">
+            </div>
+            <!-- Add other form fields here -->
+            <button type="submit">Submit</button>
+        </form>
+
+
+
+
+        <div id="success-message" style="display: none;">
+            <h3>Thank you for your application!</h3>
+            <p>Below is the data you submitted:</p>
+            <div id="submitted-data"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Firebase JavaScript SDK -->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDv20AZ2kn-9k_aqJNhjhTZgIcUKwDWqPM",
+      authDomain: "amzsoft-innovexa.firebaseapp.com",
+      databaseURL: "https://amzsoft-innovexa-default-rtdb.firebaseio.com",
+      projectId: "amzsoft-innovexa",
+      storageBucket: "amzsoft-innovexa.appspot.com",
+      messagingSenderId: "505776471332",
+      appId: "1:505776471332:web:e4a8a0c80b302bf6a307b1",
+      measurementId: "G-2D6HJPSWFB"
+    };
+  
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('application-form');
+    const successMessage = document.getElementById('success-message');
+    const submittedData = document.getElementById('submitted-data');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        // Collect form data
+        const formData = new FormData(form);
+
+        try {
+            // Store form data in a single collection named "applications"
+            const docRef = await addDoc(collection(db, 'applications'), Object.fromEntries(formData));
+            console.log("Document written with ID: ", docRef.id);
+            displaySuccessMessage(formData); // Display success message
+            form.reset(); // Reset the form after submission
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            alert("An error occurred while submitting the application. Please try again later.");
+        }
+    });
+
+    function displaySuccessMessage(formData) {
+        // Hide the form
+        form.style.display = 'none';
+
+        // Display success message
+        successMessage.style.display = 'block';
+
+        // Display submitted data
+        for (const [key, value] of formData.entries()) {
+            const field = document.createElement('p');
+            field.textContent = `${key}: ${value}`;
+            submittedData.appendChild(field);
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
+
