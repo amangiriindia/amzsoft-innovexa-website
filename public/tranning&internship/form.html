@@ -100,8 +100,8 @@
     };
   
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     const form = document.getElementById('application-form');
@@ -113,6 +113,11 @@
 
         // Collect form data
         const formData = new FormData(form);
+        
+        // Add additional fields
+        formData.append('currentDate', new Date().toISOString());
+        formData.append('login', 'true');
+        formData.append('certificate', 'false');
 
         try {
             // Store form data in a single collection named "applications"
@@ -133,14 +138,17 @@
         // Display success message
         successMessage.style.display = 'block';
 
-        // Display submitted data
+        // Display submitted data (excluding login, certificate, and currentDate)
         for (const [key, value] of formData.entries()) {
-            const field = document.createElement('p');
-            field.textContent = `${key}: ${value}`;
-            submittedData.appendChild(field);
+            if (key !== 'login' && key !== 'certificate' && key !== 'currentDate') {
+                const field = document.createElement('p');
+                field.textContent = `${key}: ${value}`;
+                submittedData.appendChild(field);
+            }
         }
     }
 </script>
+
 
 </body>
 </html>
